@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
+const router = require('./routes/bundle');
 
 const app = express();
 
@@ -28,6 +29,8 @@ db.once('open', () => {
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'OK' });
 });
+
+app.use(router)
 
 // Error handling middleware
 app.use((err, req, res, next) => {
