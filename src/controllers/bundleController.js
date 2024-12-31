@@ -15,7 +15,7 @@ class BundleController {
             } = req.body;
 
             if (!req.file) {
-                return res.status(400).json({ error: 'No bundle file provided' });
+                return res.status(200).json({ error: 'No bundle file provided' });
             }
 
             // Upload bundle to S3
@@ -63,7 +63,7 @@ class BundleController {
             }).sort({ version: -1 });
 
             if (!bundle) {
-                return res.status(404).json({ message: 'No updates available' });
+                return res.status(200).json({ message: 'No updates available' });
             }
 
             // Check rollout percentage
@@ -75,7 +75,7 @@ class BundleController {
             const devicePercentile = (hashAsNumber / 0xffffffff) * 100;
 
             if (devicePercentile > bundle.rolloutPercentage) {
-                return res.status(404).json({ message: 'No updates available' });
+                return res.status(200).json({ message: 'No updates available' });
             }
 
             // Generate signed download URL
@@ -100,7 +100,7 @@ class BundleController {
 
             const bundle = await Bundle.findOne({ version, platform });
             if (!bundle) {
-                return res.status(404).json({ error: 'Bundle not found' });
+                return res.status(200).json({ error: 'Bundle not found' });
             }
 
             // Deprecate the current version
